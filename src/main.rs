@@ -135,7 +135,7 @@ fn create_task(tasks: &mut Vec<Task>, title: &String)
 
     if tasks.len() > 0
     {
-        id = tasks[0].id + 1;
+        id = tasks[tasks.len() - 1].id + 1;
     }
 
     tasks.push(Task { id: id, title: title.clone(), status: TaskStatus::Pending });

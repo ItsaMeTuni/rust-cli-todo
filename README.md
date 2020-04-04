@@ -1,7 +1,12 @@
 # CLI Todo
+
+![](https://i.imgur.com/EIA68l8.png)
+
 This is a simple todo list CLI application. It was made for me to get familiar with Rust, not to be a feature-complete working application.
 
 If you want to test it out build it with cargo and execute it.
+
+Data is stored in ~/.cli-todo as JSON.
 
 ## How to use
 
