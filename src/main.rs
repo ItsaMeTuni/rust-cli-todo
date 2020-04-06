@@ -1,10 +1,11 @@
 
+mod io;
+mod types;
+mod output;
+
 use termion::{color, style};
 use std::iter::FromIterator;
 use std::env;
-use serde::{Serialize, Deserialize};
-use std::fs::File;
-use std::io::prelude::*;
 
 fn main()
 {
@@ -163,84 +164,6 @@ fn set_task_status(tasks: &mut Vec<Task>, task_id: &String, status: &String)
             println!("Status of task {} set successfully.\n", task_id);
             print_tasks(tasks);
             return;
-        }
-    }
-}
-
-fn load_tasks_from_disk(path: &String) -> Vec<Task>
-{
-    let file_open_result = File::open(path);
-
-    if file_open_result.is_ok()
-    {
-        let mut string = String::new();
-        file_open_result.unwrap().read_to_string(&mut string).unwrap();
-
-        return serde_json::from_str(&string).unwrap();
-    }
-    else
-    {
-        return Vec::<Task>::new();
-    }
-}
-
-fn save_tasks_to_disk(tasks: &Vec<Task>, path: &String)
-{
-    let file_open_result = std::fs::OpenOptions::new()
-                            .write(true)
-                            .truncate(true)
-                            .open(path);
-    let mut file;
-
-    if file_open_result.is_err()
-    {
-        file = File::create(path).unwrap();
-    }
-    else
-    {
-        file = file_open_result.unwrap();
-    }
-
-    let data = serde_json::to_string(&tasks).unwrap();
-
-    file.write_all(data.as_bytes()).unwrap();
-}
-
-#[derive(Serialize, Deserialize)]
-struct Task
-{
-    id: usize,
-    title: String,
-    status: TaskStatus,
-}
-
-#[derive(Serialize, Deserialize)]
-enum TaskStatus
-{
-    Pending,
-    InProgress,
-    Done,
-}
-
-impl TaskStatus
-{
-    fn to_string(&self) -> String
-    {
-        match *self
-        {
-            TaskStatus::Done => String::from("Done"),
-            TaskStatus::InProgress => String::from("In Progress"),
-            TaskStatus::Pending => String::from("Pending")
-        }
-    }
-
-    fn get_color_and_style(&self) -> String
-    {
-        match *self
-        {
-            TaskStatus::Done => format!("{}{}", color::Fg(color::LightGreen), style::Bold),
-            TaskStatus::InProgress => format!("{}{}", color::Fg(color::LightYellow), style::Bold),
-            TaskStatus::Pending => format!("{}{}", color::Fg(color::LightRed), style::Bold)
         }
     }
 }
