@@ -31,7 +31,7 @@ pub fn save_user_data_to_disk(user_data: &UserData, path: &String)
 
     if file_open_result.is_ok()
     {
-        let file = file_open_result.unwrap();
+        let mut file = file_open_result.unwrap();
 
         let data = serde_json::to_string(user_data).unwrap();
 
