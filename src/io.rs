@@ -2,7 +2,7 @@ use crate::types::UserData;
 
 use std::io::prelude::*;
 
-pub fn load_user_data_from_disk(path: &String) -> UserData
+pub fn load_user_data_from_disk(path: &str) -> UserData
 {
     let file_open_result = std::fs::OpenOptions::new()
                             .read(true)
@@ -21,7 +21,7 @@ pub fn load_user_data_from_disk(path: &String) -> UserData
     }
 }
 
-pub fn save_user_data_to_disk(user_data: &UserData, path: &String)
+pub fn save_user_data_to_disk(user_data: &UserData, path: &str)
 {
     let file_open_result = std::fs::OpenOptions::new()
                             .write(true)

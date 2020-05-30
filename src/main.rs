@@ -4,13 +4,17 @@ mod output;
 
 use termion::{color, style};
 use types::*;
+use dirs;
 
 #[macro_use]
 extern crate clap;
 
 fn main()
 {
-    let mut user_data = types::UserData::new();
+    let mut path = dirs::home_dir().unwrap().into_os_string().to_str().unwrap().to_owned();
+    path.push_str("/.cli-todo");
+
+    let mut user_data = io::load_user_data_from_disk(&path);
 
     user_data.tags.push(Tag {
         name: "pending".to_owned(),
@@ -48,4 +52,6 @@ fn main()
     }
 
     output::print_tasks(&user_data);
+
+    io::save_user_data_to_disk(&user_data, &path);
 }
