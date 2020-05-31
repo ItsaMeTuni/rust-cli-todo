@@ -110,9 +110,11 @@ Notes:
 
 Tags don't have to be configured, they're just strings. However, if the user adds a color to a tag that tag will appear colored in the output.
 
-`cli-todo tag <tag-name> <hex-color>`
+`cli-todo tag <tag-name> [hex-color] [--delete]`
 
 `cli-todo tag work #7748cd`
+
+`cli-todo tag work --delete`
 
 
 ## Date syntax

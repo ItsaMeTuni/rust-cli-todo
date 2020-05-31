@@ -99,11 +99,18 @@ version = "0.1.0"
 dependencies = [
  "chrono",
  "clap",
+ "colorsys",
  "dirs",
  "serde",
  "serde_json",
  "termion",
 ]
+
+[[package]]
+name = "colorsys"
+version = "0.5.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7a8a94dc9b53fb3f497202378c8ffb69141f3e94d8215ac710de341bc6156de2"
 
 [[package]]
 name = "constant_time_eq"

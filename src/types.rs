@@ -118,9 +118,25 @@ impl UserData
         }
     }
 
-    pub fn addTask(&mut self, mut task: Task)
+    pub fn add_task(&mut self, mut task: Task)
     {
         task.id = self.tasks.len();
         self.tasks.push(task);
+    }
+
+    pub fn delete_task(&mut self, id: usize)
+    {
+        self.tasks.retain(| task | task.id != id);
+    }
+
+    pub fn create_tag(&mut self, tag: Tag)
+    {
+        self.tags.retain(| x | tag.name != x.name);
+        self.tags.push(tag);
+    }
+
+    pub fn delete_tag(&mut self, name: &str)
+    {
+        self.tags.retain(| tag | tag.name != name);
     }
 }
