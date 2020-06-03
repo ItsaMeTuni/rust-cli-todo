@@ -59,6 +59,13 @@ fn main()
             }
         }
 
+        //default to pending if no other status tag is found
+        let status_tags = user_data.get_status_tags();
+        if new_task.tags.iter().find(| x | status_tags.iter().find(| y | *y.name == **x).is_some() ).is_none()
+        {
+            new_task.tags.push("pending".to_owned());
+        }
+
         user_data.add_task(new_task);
     }
 

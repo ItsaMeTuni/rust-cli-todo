@@ -142,4 +142,20 @@ impl UserData
     {
         self.tags.retain(| tag | tag.name != name);
     }
+
+    pub fn get_status_tags(&self) -> Vec<Tag>
+    {
+        return self.tags.iter().filter_map(| x | -> Option<Tag>
+        {
+            if x.is_status
+            {
+                return Some(x.clone())
+            }
+            else
+            {
+                return None;
+            }
+        })
+        .collect();
+    }
 }
