@@ -22,7 +22,7 @@ impl Task
             id: 0,
             title: "".to_owned(),
             tags: vec![],
-            deadline: 0,
+            deadline: -1,
             deadline_includes_time: false,
             repeats: false,
         }
@@ -46,6 +46,11 @@ impl Task
 
     pub fn get_deadline_str(&self) -> String
     {
+        if self.deadline < 0
+        {
+            return "".to_owned();
+        }
+
         let naive_date_time = NaiveDateTime::from_timestamp(self.deadline / 1000, 0);
 
         let now = Local::now();
