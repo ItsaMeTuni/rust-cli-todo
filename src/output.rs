@@ -20,17 +20,19 @@ pub fn print_tasks(user_data: &UserData)
     {
         let mut is_done = false;
 
+        //Id
         let id_str = task.id.to_string();
         table.cols[id_col].add_row(
             format!("{}{}{}", color::Fg(color::AnsiValue::grayscale(14)), id_str, reset_styles_and_colors),
             id_str.len()
         );
 
+        //Tags
         let mut status_str = String::new();
         let mut status_str_display_len = 0;
         let mut tags_str = String::new();
         let mut tags_str_display_len = 0;
-
+        
         for tag in task.get_tags(user_data)
         {
             if tag.is_status
@@ -59,9 +61,12 @@ pub fn print_tasks(user_data: &UserData)
             }
         }
 
-        table.cols[status_col].add_row(status_str, status_str_display_len);
         table.cols[tags_col].add_row(tags_str, tags_str_display_len);
 
+        //Status
+        table.cols[status_col].add_row(status_str, status_str_display_len);
+
+        //Title
         let mut title_style = "".to_owned();
         if is_done
         {
@@ -73,10 +78,23 @@ pub fn print_tasks(user_data: &UserData)
             task.title.len()
         );
 
-        //let deadline = task.get_deadline_str();
-        let deadline = "".to_owned();
-        table.cols[deadline_col].add_row(deadline.clone(), deadline.len());
+
+        //Deadline
+        let deadline = task.get_deadline_str();
+
+        let mut deadline_style = "".to_owned();
+        if is_done
+        {
+            deadline_style = format!("{}", style::CrossedOut);
+        }
+
+        table.cols[deadline_col].add_row(
+            format!("{}{}{}", deadline_style, deadline.clone(), reset_styles_and_colors),
+            deadline.len()
+        );
         
+
+        //Repeats
         let repeats_str = if task.repeats { "yes" } else { "no" };
         table.cols[repeat_col].add_row(repeats_str.to_owned(), repeats_str.len());
     }

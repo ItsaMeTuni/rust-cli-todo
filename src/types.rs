@@ -56,7 +56,7 @@ impl Task
 
         let day = date_time.day();
 
-        let mut day_suffix = "";
+        let day_suffix;
 
         if day == 1 || day == 21 || day == 31
         {
@@ -77,7 +77,13 @@ impl Task
 
         let time_str = date_time.format("%R");
 
-        return format!("{}{} {}", date_str, day_suffix, time_str);
+        let mut year_str = "".to_owned();
+        if date_time.year() != now.year()
+        {
+            year_str = date_time.year().to_string();
+        }
+
+        return format!("{}{} {} {}", date_str, day_suffix, year_str, time_str);
     }
 }
 
@@ -110,14 +116,6 @@ pub struct UserData
 
 impl UserData
 {
-    pub fn new() -> UserData
-    {
-        return UserData {
-            tasks: Vec::<Task>::new(),
-            tags: Vec::<Tag>::new(),
-        }
-    }
-
     pub fn add_task(&mut self, mut task: Task)
     {
         task.id = self.tasks.len();
